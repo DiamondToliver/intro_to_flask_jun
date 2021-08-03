@@ -1,3 +1,5 @@
 .env
-__pycache__/
+__pycache__
+intro_to_flask_jun/
 jun_venv/
+.vscode
