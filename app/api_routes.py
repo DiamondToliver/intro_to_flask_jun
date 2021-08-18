@@ -39,23 +39,35 @@ def create_user():
 
 @app.route('/api/posts')
 def posts():
-    posts= [p.to_dict() for p in Post.query.all()]
+    """
+    [GET] /api/posts
+    """
+    posts = [p.to_dict() for p in Post.query.all()]
     return jsonify(posts=posts)
+
 
 @app.route('/api/create-post', methods=['POST'])
 def create_post():
+    """
+    [POST] /api/create-post
+    """
     data = request.get_json()
     print(data)
+    # Grab data from request body
     title = data.get('title')
-    user_id =data.get('user_name')
     body = data.get('body')
-    
-    if not title or not body or not user_id:
-        return jsonify({'error': 'You need a username, email, and password'})
-        
-    print(title, body, user_id)
-    new_post = Post(title,body,user_id)
+    user_id = data.get('user_id')
 
+    # Sad path - request body is missing key
+    if not title or not body or not user_id:
+        return jsonify({'error': 'You need a title, body, and user_id'}), 400
+
+    print(title, body, user_id)
+
+    # Create new instance of Post
+    new_post = Post(title, body, user_id)
+
+    # Add new post to database
     db.session.add(new_post)
     db.session.commit()
 
