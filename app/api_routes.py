@@ -39,9 +39,24 @@ def create_user():
 
 @app.route('/api/posts')
 def posts():
-    pass
-
+    posts= [p.to_dict() for p in Post.query.all()]
+    return jsonify(posts=posts)
 
 @app.route('/api/create-post', methods=['POST'])
 def create_post():
-    pass
+    data = request.get_json()
+    print(data)
+    title = data.get('title')
+    user_id =data.get('user_name')
+    body = data.get('body')
+    
+    if not title or not body or not user_id:
+        return jsonify({'error': 'You need a username, email, and password'})
+        
+    print(title, body, user_id)
+    new_post = Post(title,body,user_id)
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    return jsonify(new_post.to_dict())
