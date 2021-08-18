@@ -1,5 +1,4 @@
 .env
-__pycache__
-intro_to_flask_jun/
+__pycache__/
 jun_venv/
-.vscode
+app.db
