@@ -47,11 +47,4 @@ class Post(db.Model):
             'user': self.author.to_dict()
         }
     
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'title': self.title,
-            'body': self.body,
-            'date_created': self.date_created,
-            'user': self.author.to_dict()
-        }
+    
